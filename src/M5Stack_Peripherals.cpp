@@ -49,6 +49,12 @@ void CM5LCDScreen::Set_Touch_State(bool touching, int x, int y) {
 	mTouching = touching;
 	mTouch_X = x;
 	mTouch_Y = y;
+
+	for (auto dr : mDrawables) {
+		if (dr->Touched(x, y, touching)) {
+			break;
+		}
+	}
 }
 
 bool CM5LCDScreen::Is_Touching() const {
@@ -205,3 +211,43 @@ bool CM5UART::Empty(Channel c, bool deviceSide) {
 	return FIFO(c, !deviceSide).empty();
 }
 
+/******************************** Misc ***************************************/
+
+void CM5Misc::Set_Vibration(bool state) {
+	mIs_Vibrating = true;
+
+	WidgetEventProxy::Instance()->Emit();
+}
+
+bool CM5Misc::Get_Vibration() const {
+	return mIs_Vibrating;
+}
+
+double CM5Misc::Get_Battery_Voltage() const {
+	return mBattery_Voltage;
+}
+
+bool CM5Misc::Is_Battery_Charging() const {
+	return mIs_Charging;
+}
+
+void CM5Misc::Set_Volume(int volume) {
+	mVolume = volume;
+
+	WidgetEventProxy::Instance()->Emit();
+}
+
+int CM5Misc::Get_Volume() const {
+	return mVolume;
+}
+
+void CM5Misc::Play_Tone(int tone, int beat_duration) {
+
+	// TODO: simulate tone
+
+	WidgetEventProxy::Instance()->Emit();
+
+	// TODO: wait for given time
+
+	//WidgetEventProxy::Instance()->Emit();
+}

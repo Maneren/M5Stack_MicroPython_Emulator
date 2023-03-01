@@ -3,6 +3,8 @@
 #define _snprintf snprintf
 #define _copysign copysign
 #include <boost/python.hpp>
+#undef _snprintf
+#undef _copysign
 
 #include "SelfInitSingleton.h"
 

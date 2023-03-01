@@ -20,7 +20,8 @@ class Power {
 				.def("isChargeFull", &Power::isChargeFull)
 				.def("isCharging", &Power::isCharging)
 				.def("getBatteryLevel", &Power::getBatteryLevel)
-				.def("getBatVoltage", &Power::getBatVoltage);
+				.def("getBatVoltage", &Power::getBatVoltage)
+				.def("setVibrationEnable", &Power::setVibrationEnable);
 		}
 
 	public:
@@ -29,20 +30,27 @@ class Power {
 		}
 
 		static bool isChargeFull() {
-			return false; // TODO: mock this
+			return ((BATTERY_VOLTAGE_MAX - CM5Stack_VM::Instance()->Get_Misc()->Get_Battery_Voltage()) / (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN)) > 0.98; // consider >98% battery charge as "full"
 		}
 
 		static bool isCharging() {
-			return false; // TODO: mock this
+			return CM5Stack_VM::Instance()->Get_Misc()->Is_Battery_Charging();
 		}
 
 		static double getBatteryLevel() {
-			return 0.95; // TODO: mock this
+			return 100 * ((BATTERY_VOLTAGE_MAX - CM5Stack_VM::Instance()->Get_Misc()->Get_Battery_Voltage()) / (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN));
 		}
 
 		static double getBatVoltage() {
-			return 4.0; // TODO: mock this
+			return CM5Stack_VM::Instance()->Get_Misc()->Get_Battery_Voltage();
+		}
+
+		static void setVibrationEnable(bool state) {
+			CM5Stack_VM::Instance()->Get_Misc()->Set_Vibration(state);
 		}
 
 		virtual ~Power() = default;
+
+		static constexpr double BATTERY_VOLTAGE_MIN = 3.7; // minimum battery voltage - this should be obtained through the mocked interface later
+		static constexpr double BATTERY_VOLTAGE_MAX = 4.1; // maximum battery voltage - this should be obtained through the mocked interface later
 };

@@ -5,10 +5,6 @@
 #include <iostream>
 #include <ctime>
 
-#ifdef _WIN32
-#include <Windows.h>
-#endif
-
 /*
  * RTC class wrapper for "rtc" submodule
  */

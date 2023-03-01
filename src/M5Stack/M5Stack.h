@@ -7,6 +7,7 @@
 #include "RTC.h"
 #include "Power.h"
 #include "Touch.h"
+#include "Speaker.h"
 
 #include <chrono>
 #include <thread>
@@ -36,6 +37,7 @@ BOOST_PYTHON_MODULE(m5stack) {
     Define_Class<RTC>();
     Define_Class<Power>();
     Define_Class<Touch>();
+    Define_Class<Speaker>();
 
     // stand-alone module funcions
     py::def("wait", &wait);

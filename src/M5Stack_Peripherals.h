@@ -217,3 +217,38 @@ class CM5UART {
 		// is the RX FIFO empty?
 		bool Empty(Channel c, bool deviceSide);
 };
+
+/*
+ * M5Stack miscellanous controller - e.g., vibration, sound, ...
+ */
+class CM5Misc {
+	private:
+		// is the vibration motor turned on?
+		bool mIs_Vibrating = false;
+
+		// current battery voltage
+		double mBattery_Voltage = 4.0;
+		// is the battery charging now?
+		bool mIs_Charging = false;
+
+		// speaker volume
+		int mVolume = 5;
+
+	public:
+		// sets the vibration motor to given state
+		void Set_Vibration(bool state);
+		// is the vibration motor turned on?
+		bool Get_Vibration() const;
+
+		// retrieve the battery voltage
+		double Get_Battery_Voltage() const;
+		// is the battery charging now?
+		bool Is_Battery_Charging() const;
+
+		// sets volume level
+		void Set_Volume(int volume);
+		// retrieves volume level
+		int Get_Volume() const;
+		// plays a tone of given frequency for beat duration given
+		void Play_Tone(int tone, int beat_duration);
+};

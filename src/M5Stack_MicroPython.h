@@ -40,6 +40,8 @@ class CM5Stack_VM : public Self_Init_Singleton<CM5Stack_VM, true> {
 		std::shared_ptr<CM5Buttons> mButtons;
 		// UART (channel 1) instance
 		std::shared_ptr<CM5UART> mUART;
+		// miscellanous controller
+		std::shared_ptr<CM5Misc> mMisc;
 
 	protected:
 		// thread for Python interpreter
@@ -88,6 +90,14 @@ class CM5Stack_VM : public Self_Init_Singleton<CM5Stack_VM, true> {
 				mUART = std::make_shared<CM5UART>();
 
 			return mUART;
+		}
+
+		// retrieve misc controller instance, create if not exists
+		std::shared_ptr<CM5Misc>& Get_Misc() {
+			if (!mMisc)
+				mMisc = std::make_shared<CM5Misc>();
+
+			return mMisc;
 		}
 
 		// Self_Init_Python_Object concept

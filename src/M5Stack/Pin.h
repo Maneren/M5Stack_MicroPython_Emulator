@@ -92,13 +92,13 @@ class Pin {
 		static constexpr int _PULL_HOLD = 2;
 		static constexpr int _PULL_FLOAT = 3;
 
-		static const int IN_ = _IN;
-		static const int OUT_ = _OUT;
-		static const int OUT_OD = _OUT_OD;
-		static const int INOUT = _INOUT;
-		static const int OPEN_DRAIN = _OPEN_DRAIN;
-		static const int PULL_UP = _PULL_UP;
-		static const int PULL_DOWN = _PULL_DOWN;
-		static const int PULL_HOLD = _PULL_HOLD;
-		static const int PULL_FLOAT = _PULL_FLOAT;
+		static constexpr int IN_ = _IN;
+		static constexpr int OUT_ = _OUT;
+		static constexpr int OUT_OD = _OUT_OD;
+		static constexpr int INOUT = _INOUT;
+		static constexpr int OPEN_DRAIN = _OPEN_DRAIN;
+		static constexpr int PULL_UP = _PULL_UP;
+		static constexpr int PULL_DOWN = _PULL_DOWN;
+		static constexpr int PULL_HOLD = _PULL_HOLD;
+		static constexpr int PULL_FLOAT = _PULL_FLOAT;
 };

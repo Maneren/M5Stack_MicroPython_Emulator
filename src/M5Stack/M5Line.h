@@ -47,5 +47,5 @@ class M5Line {
 		virtual ~M5Line() = default;
 
 		// default line mode
-		static const int PLINE = 0;
+		static constexpr int PLINE = 0;
 };

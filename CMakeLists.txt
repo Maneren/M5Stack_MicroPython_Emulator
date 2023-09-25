@@ -1,12 +1,13 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.6)
 
 PROJECT(M5Stack_emu)
 
 SET(CMAKE_CXX_STANDARD 20)
+SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 FIND_PACKAGE(Qt5 COMPONENTS Core Widgets)
 FIND_PACKAGE(Python COMPONENTS Interpreter Development)
-FIND_PACKAGE(Boost COMPONENTS python38)
+FIND_PACKAGE(Boost COMPONENTS python311)
 
 ADD_DEFINITIONS(-DBOOST_ALL_NO_LIB -DBOOST_PYTHON_STATIC_LIB)
 
@@ -15,8 +16,7 @@ FILE(GLOB_RECURSE src_widgets src/Widgets/*.cpp src/Widgets/*.h src/Widgets/*.c 
 FILE(GLOB_RECURSE src_m5stack src/M5Stack/*.cpp src/M5Stack/*.h src/M5Stack/*.c src/M5Stack/*.hpp)
 
 SOURCE_GROUP("src" FILES ${src_base})
-SOURCE_GROUP("src\\Widgets" FILES ${src_widgets})
-SOURCE_GROUP("src\\M5Stack" FILES ${src_m5stack})
+SOURCE_GROUP("src/Widgets/" FILES ${src_widgets})
 
 ADD_EXECUTABLE(M5Stack_emu ${src_base} ${src_widgets} ${src_m5stack})
 

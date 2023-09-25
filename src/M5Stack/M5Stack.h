@@ -13,12 +13,12 @@
 #include <thread>
 
 // wait module function - wait for given amount of seconds
-void wait(double duration) {
+inline void waits(double duration) {
     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<long>(duration * 1000)));
 }
 
 // wait_ms module function - wait for given amount of milliseconds
-void wait_ms(int duration) {
+inline void wait_ms(int duration) {
     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<long>(duration)));
 }
 
@@ -40,6 +40,6 @@ BOOST_PYTHON_MODULE(m5stack) {
     Define_Class<Speaker>();
 
     // stand-alone module funcions
-    py::def("wait", &wait);
+    py::def("wait", &waits);
     py::def("wait_ms", &wait_ms);
 }

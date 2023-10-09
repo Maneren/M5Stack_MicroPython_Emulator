@@ -8,23 +8,19 @@
  * PWM class wrapper
  */
 class PWM {
-	public:
-		// Self_Init_Python_Object concept
-		static constexpr const char* Get_Class_Name() {
-			return "PWM";
-		}
+public:
+  // Self_Init_Python_Object concept
+  static constexpr const char *Get_Class_Name() { return "PWM"; }
 
-		// Self_Init_Python_Object concept
-		static auto&& Define_Class_Contents(auto&& obj) {
-			return obj;
-		}
+  // Self_Init_Python_Object concept
+  static auto &&Define_Class_Contents(auto &&obj) { return obj; }
 
-	public:
-		PWM() {
-			//
-		}
+public:
+  PWM() {
+    //
+  }
 
-		virtual ~PWM() = default;
+  virtual ~PWM() = default;
 
-		// TODO
+  // TODO
 };

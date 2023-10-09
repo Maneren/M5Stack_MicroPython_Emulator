@@ -8,23 +8,19 @@
  * DAC class encapsulating the Digital-To-Analog converter submodule
  */
 class DAC {
-	public:
-		// Self_Init_Python_Object concept
-		static constexpr const char* Get_Class_Name() {
-			return "DAC";
-		}
+public:
+  // Self_Init_Python_Object concept
+  static constexpr const char *Get_Class_Name() { return "DAC"; }
 
-		// Self_Init_Python_Object concept
-		static auto&& Define_Class_Contents(auto&& obj) {
-			return obj;
-		}
+  // Self_Init_Python_Object concept
+  static auto &&Define_Class_Contents(auto &&obj) { return obj; }
 
-	public:
-		DAC() {
-			//
-		}
+public:
+  DAC() {
+    //
+  }
 
-		virtual ~DAC() = default;
+  virtual ~DAC() = default;
 
-		// TODO
+  // TODO
 };

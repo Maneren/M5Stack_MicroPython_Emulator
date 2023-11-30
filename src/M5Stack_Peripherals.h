@@ -9,8 +9,14 @@
 #include "BoostPythonDefs.h"
 #include "WidgetEventProxy.h"
 
+#include <QBuffer>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
+#include <QtMultimedia/QAudioDeviceInfo>
+#include <QtMultimedia/QAudioFormat>
+#include <QtMultimedia/QAudioOutput>
+#include <qmath.h>
+#include <qobject.h>
 
 #include "M5Stack_Drawables.h"
 
@@ -249,5 +255,5 @@ public:
   // retrieves volume level
   int Get_Volume() const;
   // plays a tone of given frequency for beat duration given
-  void Play_Tone(int tone, int beat_duration);
+  void Play_Tone(int freq, int duration_ms);
 };

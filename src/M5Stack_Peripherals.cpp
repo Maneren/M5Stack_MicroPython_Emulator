@@ -1,5 +1,14 @@
 #include "M5Stack_Peripherals.h"
 
+#include <iostream>
+
+#include <QBuffer>
+#include <QtMultimedia/QAudioDeviceInfo>
+#include <QtMultimedia/QAudioFormat>
+#include <QtMultimedia/QAudioOutput>
+#include <qmath.h>
+#include <qobject.h>
+
 /******************************** LCD ****************************************/
 
 bool CM5LCDScreen::Is_Changed() const { return mChanged; }
@@ -62,6 +71,7 @@ int CM5LCDScreen::Get_Touch_Y() const { return mTouch_Y; }
 
 void CM5GPIO::Set_Pin_Mode(int pin, int mode) {
   if (pin < 0 || pin >= GPIO_Count) {
+    std::cout << "Setting invalid pin number: " << pin << std::endl;
     return;
   }
   mPins[pin].mode = mode;
@@ -72,6 +82,7 @@ void CM5GPIO::Set_Pin_Mode(int pin, int mode) {
 
 void CM5GPIO::Set_Pin_State(int pin, int state) {
   if (pin < 0 || pin >= GPIO_Count) {
+    std::cout << "Setting invalid pin number: " << pin << std::endl;
     return;
   }
   mPins[pin].state = state;
@@ -82,6 +93,7 @@ void CM5GPIO::Set_Pin_State(int pin, int state) {
 
 int CM5GPIO::Get_Pin_Mode(int pin) {
   if (pin < 0 || pin >= GPIO_Count) {
+    std::cout << "Reading invalid pin number: " << pin << std::endl;
     return 0;
   }
   return mPins[pin].mode;
@@ -89,6 +101,7 @@ int CM5GPIO::Get_Pin_Mode(int pin) {
 
 int CM5GPIO::Get_Pin_State(int pin) {
   if (pin < 0 || pin >= GPIO_Count) {
+    std::cout << "Reading invalid pin number: " << pin << std::endl;
     return 0;
   }
   return mPins[pin].state;
@@ -215,7 +228,48 @@ void CM5Misc::Set_Volume(int volume) {
 
 int CM5Misc::Get_Volume() const { return mVolume; }
 
-void CM5Misc::Play_Tone(int tone, int beat_duration) {
+const qreal SAMPLING_RATE = 44100;
+const qreal FREQ_CONST = (2.0 * M_PI) / SAMPLING_RATE;
+
+static int timeToSize(int ms, const QAudioFormat &format) {
+  return (format.sampleSize() / 8) * format.sampleRate() * (ms / 1000);
+}
+
+void CM5Misc::Play_Tone(int freq, int duration_ms) {
+  QAudioFormat format;
+  format.setSampleRate(SAMPLING_RATE);
+  format.setChannelCount(1);
+  format.setSampleSize(8);
+  format.setCodec("audio/pcm");
+  format.setByteOrder(QAudioFormat::LittleEndian);
+  format.setSampleType(QAudioFormat::SignedInt);
+
+  int sample_count = timeToSize(duration_ms, format);
+
+  QByteArray *buf = new QByteArray();
+  buf->resize(sample_count);
+
+  for (int i = 0; i < sample_count; i++) {
+    qreal t = (qreal)(freq * i);
+    t *= FREQ_CONST;
+    t = qSin(t);
+    // t *= TG_MAX_VAL; // normalize the value
+    (*buf)[i] = (quint8)t;
+  }
+
+  QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
+  if (!info.isFormatSupported(format)) {
+    std::cout
+        << "Raw audio format not supported by backend, cannot play audio.";
+    return;
+  }
+
+  QBuffer *input = new QBuffer(buf);
+  input->open(QIODevice::ReadOnly);
+
+  QAudioOutput *audio = new QAudioOutput(info, format);
+
+  audio->start(input);
 
   // TODO: simulate tone
 

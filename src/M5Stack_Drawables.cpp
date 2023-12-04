@@ -40,7 +40,7 @@ CDrawable_Line::CDrawable_Line(int x, int y, int x2, int y2, int color)
 void CDrawable_Line::Draw(QPainter &painter) {
 
   painter.setPen(QColor::fromRgb((mColor >> 16) & 0xFF, (mColor >> 8) & 0xFF,
-                                 (mColor)&0xFF));
+                                 (mColor) & 0xFF));
 
   painter.drawLine(QPoint(mPosX, mPosY), QPoint(mPosX2, mPosY2));
 }
@@ -78,12 +78,12 @@ void CDrawable_Circle::Draw(QPainter &painter) {
 
   painter.setPen(QColor::fromRgb((mBorder_Color >> 16) & 0xFF,
                                  (mBorder_Color >> 8) & 0xFF,
-                                 (mBorder_Color)&0xFF));
+                                 (mBorder_Color) & 0xFF));
 
   if (mBrush_Color != 0xFFFFFFFF) {
     painter.setBrush(QColor::fromRgb((mBrush_Color >> 16) & 0xFF,
                                      (mBrush_Color >> 8) & 0xFF,
-                                     (mBrush_Color)&0xFF));
+                                     (mBrush_Color) & 0xFF));
   } else {
     painter.setBrush(Qt::transparent);
   }
@@ -135,12 +135,12 @@ void CDrawable_Button::Draw(QPainter &painter) {
 
   painter.setPen(QColor::fromRgb((mText_Color >> 16) & 0xFF,
                                  (mText_Color >> 8) & 0xFF,
-                                 (mText_Color)&0xFF));
+                                 (mText_Color) & 0xFF));
 
   if (mBrush_Color != 0xFFFFFFFF) {
     painter.setBrush(QColor::fromRgb((mBrush_Color >> 16) & 0xFF,
                                      (mBrush_Color >> 8) & 0xFF,
-                                     (mBrush_Color)&0xFF));
+                                     (mBrush_Color) & 0xFF));
   } else {
     painter.setBrush(Qt::transparent);
   }
@@ -230,7 +230,7 @@ void CDrawable_Checkbox::Draw(QPainter &painter) {
 
   painter.setPen(QColor::fromRgb((mText_Color >> 16) & 0xFF,
                                  (mText_Color >> 8) & 0xFF,
-                                 (mText_Color)&0xFF));
+                                 (mText_Color) & 0xFF));
 
   painter.setBrush(Qt::white);
 
@@ -250,7 +250,7 @@ void CDrawable_Checkbox::Draw(QPainter &painter) {
   if (mIs_Checked) {
     painter.setBrush(QColor::fromRgb((mCheck_Color >> 16) & 0xFF,
                                      (mCheck_Color >> 8) & 0xFF,
-                                     (mCheck_Color)&0xFF));
+                                     (mCheck_Color) & 0xFF));
 
     painter.drawRect(mPosX + 2, mPosY + 2, 16 - 4, 16 - 4);
   }
@@ -324,13 +324,13 @@ void CDrawable_Switch::Draw(QPainter &painter) {
 
   painter.setPen(Qt::white);
 
-  painter.setBrush(QColor::fromRgb((mBg_Color >> 16) & 0xFF,
-                                   (mBg_Color >> 8) & 0xFF, (mBg_Color)&0xFF));
+  painter.setBrush(QColor::fromRgb(
+      (mBg_Color >> 16) & 0xFF, (mBg_Color >> 8) & 0xFF, (mBg_Color) & 0xFF));
 
   painter.drawRect(mPosX, mPosY, mWidth, mHeight);
 
   painter.setBrush(QColor::fromRgb((mColor >> 16) & 0xFF, (mColor >> 8) & 0xFF,
-                                   (mColor)&0xFF));
+                                   (mColor) & 0xFF));
 
   painter.drawRect(mPosX + 2 + (mIs_Checked ? ((mWidth - 2) / 2) : 0),
                    mPosY + 2, (mWidth - 4) / 2, mHeight - 4);

@@ -7,18 +7,16 @@
 #include <vector>
 
 #include "BoostPythonDefs.h"
-#include "WidgetEventProxy.h"
+#include "M5Stack_Drawables.h"
 
 #include <QBuffer>
+#include <QObject>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
+#include <QtMath>
 #include <QtMultimedia/QAudioDeviceInfo>
 #include <QtMultimedia/QAudioFormat>
 #include <QtMultimedia/QAudioOutput>
-#include <qmath.h>
-#include <qobject.h>
-
-#include "M5Stack_Drawables.h"
 
 /*
  * LCD screen

@@ -3,11 +3,13 @@
 #include <iostream>
 
 #include <QBuffer>
+#include <QObject>
+#include <QtMath>
 #include <QtMultimedia/QAudioDeviceInfo>
 #include <QtMultimedia/QAudioFormat>
 #include <QtMultimedia/QAudioOutput>
-#include <qmath.h>
-#include <qobject.h>
+
+#include "WidgetEventProxy.h"
 
 /******************************** LCD ****************************************/
 
@@ -259,8 +261,10 @@ void CM5Misc::Play_Tone(int freq, int duration_ms) {
 
   QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
   if (!info.isFormatSupported(format)) {
-    std::cout
-        << "Raw audio format not supported by backend, cannot play audio.";
+    std::cout << format.codec().toStdString()
+              << " not supported by backend, cannot play audio."
+                 "Supported formats: "
+              << info.supportedCodecs().join(", ").toStdString() << std::endl;
     return;
   }
 
@@ -268,14 +272,7 @@ void CM5Misc::Play_Tone(int freq, int duration_ms) {
   input->open(QIODevice::ReadOnly);
 
   QAudioOutput *audio = new QAudioOutput(info, format);
-
   audio->start(input);
 
-  // TODO: simulate tone
-
   WidgetEventProxy::Instance()->Emit();
-
-  // TODO: wait for given time
-
-  // WidgetEventProxy::Instance()->Emit();
 }

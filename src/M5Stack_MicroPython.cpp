@@ -22,7 +22,6 @@ CM5Stack_VM::CM5Stack_VM() {
 }
 
 bool CM5Stack_VM::Load_File(const std::filesystem::path &path) {
-
   std::ifstream fpy(path);
   if (!fpy.is_open()) {
     return false;
@@ -39,7 +38,6 @@ const std::string &CM5Stack_VM::Get_File_Contents() const {
 }
 
 void CM5Stack_VM::Run() {
-
   if (mPy_Thread && mPy_Thread->joinable()) {
     // TODO: terminate it somehow?
     mPy_Thread->join();
@@ -49,7 +47,6 @@ void CM5Stack_VM::Run() {
 }
 
 void CM5Stack_VM::Py_Thread_Fnc() {
-
   // TODO: solve termination somehow
 
   try {

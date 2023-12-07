@@ -1,14 +1,14 @@
 #pragma once
 
-#define _snprintf snprintf
-#define _copysign copysign
+// #define _snprintf snprintf
+// #define _copysign copysign
 #include <boost/python.hpp>
-#undef _snprintf
-#undef _copysign
+// #undef _snprintf
+// #undef _copysign
 
-#include "SelfInitSingleton.h"
+// #include "SelfInitSingleton.h"
 
-#include <concepts>
+// #include <concepts>
 
 namespace py = boost::python;
 

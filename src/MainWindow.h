@@ -1,6 +1,6 @@
 #pragma once
 
-#include "M5Stack_MicroPython.h"
+#include <filesystem>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
@@ -15,6 +15,6 @@ private:
   const std::filesystem::path mPy_File_Path;
 
 public:
-  CMain_Window(const std::filesystem::path &pyFile);
+  explicit CMain_Window(const std::filesystem::path &pyFile);
   void Setup_GUI();
 };

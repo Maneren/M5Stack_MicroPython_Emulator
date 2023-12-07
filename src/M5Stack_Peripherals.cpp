@@ -1,6 +1,8 @@
-#include "M5Stack_Peripherals.h"
-
 #include <iostream>
+
+#include "BoostPythonDefs.h"
+#include "M5Stack_Peripherals.h"
+#include "WidgetEventProxy.h"
 
 #include <QBuffer>
 #include <QObject>
@@ -9,16 +11,13 @@
 #include <QtMultimedia/QAudioFormat>
 #include <QtMultimedia/QAudioOutput>
 
-#include "WidgetEventProxy.h"
-
 /******************************** LCD ****************************************/
 
 bool CM5LCDScreen::Is_Changed() const { return mChanged; }
 
 void CM5LCDScreen::Clear_Changed_Flag() { mChanged = false; }
 
-void CM5LCDScreen::Render_To(QPainter &painter) {
-
+void CM5LCDScreen::Render_To(QPainter *painter) {
   for (auto &drawable : mDrawables)
     drawable->Draw(painter);
 }
@@ -194,7 +193,6 @@ std::string CM5UART::Read_Line(Channel c, bool deviceSide) {
 }
 
 void CM5UART::Write(Channel c, bool deviceSide, const std::string &str) {
-
   auto &fifo = FIFO(c, deviceSide);
   for (auto ch : str) {
     fifo.push(ch);

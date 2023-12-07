@@ -1,10 +1,10 @@
+#include <iostream>
+
 #include "MainWindow.h"
 
 #include <QtWidgets/QApplication>
-#include <iostream>
 
 int main(int argc, char **argv) {
-
   if (argc != 2) {
     std::cerr << "Invalid parameter count. Usage: " << argv[0]
               << " <MicroPython file>" << std::endl;

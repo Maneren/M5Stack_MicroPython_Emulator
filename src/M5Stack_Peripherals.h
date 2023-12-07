@@ -4,9 +4,9 @@
 #include <memory>
 #include <queue>
 #include <string>
+#include <utility>
 #include <vector>
 
-#include "BoostPythonDefs.h"
 #include "M5Stack_Drawables.h"
 
 #include <QBuffer>
@@ -45,7 +45,7 @@ public:
   void Clear_Changed_Flag();
 
   // renders all drawables to the given painter/canvas
-  void Render_To(QPainter &painter);
+  void Render_To(QPainter *painter);
 
   // clears the screen, removes drawables
   void Clean();
@@ -90,6 +90,7 @@ private:
   struct TPin_State {
     int mode;
     int state;
+    int advanced_state;
   };
 
   // array of pin states
@@ -107,6 +108,10 @@ public:
   int Get_Pin_Mode(int pin);
   // retrieves pin state
   int Get_Pin_State(int pin);
+
+  //
+  void Set_Advanced_Pin_Mode(int pin, int state);
+  int Get_Advanced_Pin_Mode(int pin);
 
   // did something change?
   bool Is_Changed() const;

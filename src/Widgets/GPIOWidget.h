@@ -1,10 +1,9 @@
 #pragma once
 
-#include <memory>
 #include <vector>
 
 #include "../M5Stack/Pin.h"
-#include "../M5Stack_MicroPython.h"
+#include "../WidgetEventProxy.h"
 
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>

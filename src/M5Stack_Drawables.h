@@ -3,6 +3,7 @@
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
 #include <string>
+#include <vector>
 
 struct _object;
 typedef _object PyObject;
@@ -18,11 +19,11 @@ protected:
   int mPosY = 0;
 
 public:
-  IDrawable(int x = 0, int y = 0) : mPosX(x), mPosY(y) {}
+  explicit IDrawable(int x = 0, int y = 0) : mPosX(x), mPosY(y) {}
   virtual ~IDrawable() = default;
 
   // draw the drawable onto the canvas
-  virtual void Draw(QPainter &painter) = 0;
+  virtual void Draw(QPainter *painter) = 0;
   // process the touchscreen touch - not mandatory
   virtual bool Touched(int x, int y, bool touch = true) { return false; }
 };
@@ -44,7 +45,7 @@ public:
   // sets a new text to the element
   void Set_Text(const std::string &text);
 
-  virtual void Draw(QPainter &painter) override;
+  void Draw(QPainter *painter) override;
 };
 
 /*
@@ -66,7 +67,7 @@ public:
   // sets the line position
   void Set_Position(int x, int y, int x2, int y2);
 
-  virtual void Draw(QPainter &painter) override;
+  void Draw(QPainter *painter) override;
 };
 
 /*
@@ -91,7 +92,7 @@ public:
   // sets the circle radius
   void Set_Radius(int radius);
 
-  virtual void Draw(QPainter &painter) override;
+  void Draw(QPainter *painter) override;
 };
 
 /*
@@ -132,8 +133,8 @@ public:
   // registers released callback
   void Register_Released_Callback(PyObject *cb);
 
-  virtual void Draw(QPainter &painter) override;
-  virtual bool Touched(int x, int y, bool touch = true) override;
+  void Draw(QPainter *painter) override;
+  bool Touched(int x, int y, bool touch = true) override;
 };
 
 /*
@@ -180,8 +181,8 @@ public:
   // set checked state
   void Set_Checked(bool state);
 
-  virtual void Draw(QPainter &painter) override;
-  virtual bool Touched(int x, int y, bool touch = true) override;
+  void Draw(QPainter *painter) override;
+  bool Touched(int x, int y, bool touch = true) override;
 };
 
 /*
@@ -224,6 +225,6 @@ public:
   // get switch state
   bool Get_State() const;
 
-  virtual void Draw(QPainter &painter) override;
-  virtual bool Touched(int x, int y, bool touch = true) override;
+  void Draw(QPainter *painter) override;
+  bool Touched(int x, int y, bool touch = true) override;
 };

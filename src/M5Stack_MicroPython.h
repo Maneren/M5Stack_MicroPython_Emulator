@@ -1,28 +1,21 @@
 #pragma once
 
-#include <array>
-#include <chrono>
 #include <filesystem>
 #include <memory>
-#include <mutex>
-#include <queue>
+#include <string>
 #include <thread>
 
 #include "BoostPythonDefs.h"
+#include "M5Stack_Peripherals.h"
 #include "SelfInitSingleton.h"
-#include "WidgetEventProxy.h"
 
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
-
-#include "M5Stack_Drawables.h"
-#include "M5Stack_Peripherals.h"
 
 /*
  * M5Stack MicroPython virtual machine
  */
 class CM5Stack_VM : public Self_Init_Singleton<CM5Stack_VM, true> {
-
 private:
   // main Python module
   py::object mMain_Module;

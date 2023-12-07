@@ -1,6 +1,17 @@
 #include "GPIOWidget.h"
 
+#include <QApplication>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QWidget>
+#include <qnamespace.h>
+
+QColor linearInterpolateColor(const QColor &color1, const QColor &color2,
+                              double t) {
+  double r = color1.red() * (1 - t) + color2.red() * t;
+  double g = color1.green() * (1 - t) + color2.green() * t;
+  double b = color1.blue() * (1 - t) + color2.blue() * t;
+  return QColor(r, g, b);
+}
 
 CGPIO_Pin_Button_Widget::CGPIO_Pin_Button_Widget(uint32_t pinNo,
                                                  CGPIO_Widget *parent)
@@ -23,19 +34,19 @@ void CGPIO_Pin_Button_Widget::paintEvent(QPaintEvent *event) {
   QPainter painter;
   painter.begin(this);
 
-  const QRect r(0, 0, width(), height());
-  painter.fillRect(r, Qt::white);
-
   setAttribute(Qt::WA_OpaquePaintEvent);
   QPen linepen;
   linepen.setWidth(2);
   painter.setRenderHint(QPainter::Antialiasing, true);
 
+  QColor pinColor =
+      linearInterpolateColor(Qt::green, Qt::red, mPin_State / 255.0);
+
   // depending on pin mode, draw the circle accordingly
   switch (mPin_Mode) {
   // input - outline
   case Pin::_IN:
-    linepen.setColor(mPin_State ? Qt::green : Qt::red);
+    linepen.setColor(pinColor);
     painter.setPen(linepen);
     painter.drawEllipse(QPoint(width() / 2, height() / 2), (width() / 2) - 1,
                         (height() / 2) - 1);
@@ -44,8 +55,7 @@ void CGPIO_Pin_Button_Widget::paintEvent(QPaintEvent *event) {
   case Pin::_OUT:
     linepen.setColor(mPin_State ? Qt::green : Qt::red);
     painter.setPen(linepen);
-    painter.setBrush(
-        QBrush(mPin_State ? Qt::green : Qt::red, Qt::SolidPattern));
+    painter.setBrush(QBrush(pinColor, Qt::SolidPattern));
     painter.drawEllipse(QPoint(width() / 2, height() / 2), (width() / 2) - 1,
                         (height() / 2) - 1);
     break;
@@ -63,7 +73,11 @@ void CGPIO_Pin_Button_Widget::paintEvent(QPaintEvent *event) {
   // text - pin number
   QFont fnt(painter.font().family(), 7, 99, false);
   painter.setFont(fnt);
-  linepen.setColor(Qt::black);
+
+  auto pallete = QApplication::palette();
+  auto textColor = palette().color(palette().Text);
+
+  linepen.setColor(textColor);
   painter.setPen(linepen);
 
   QFontMetrics fm(painter.font());

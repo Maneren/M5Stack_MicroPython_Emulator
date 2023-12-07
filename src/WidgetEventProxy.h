@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QtWidgets/QWidget>
-
 #include <vector>
+
+#include <QtWidgets/QWidget>
 
 /*
  * Any widget that should be signalled from the device side should derive this
@@ -12,7 +12,7 @@ class ProxiedWidget : public QWidget {
   Q_OBJECT
 
 public slots:
-  void trigger_repaint_slot() { Invoke_Repaint(); };
+  void trigger_repaint_slot() { Invoke_Repaint(); }
 
 public:
   using QWidget::QWidget;

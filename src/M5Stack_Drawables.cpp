@@ -1,6 +1,5 @@
-#include "M5Stack_MicroPython.h"
-
 #include "M5Stack_Drawables.h"
+#include "BoostPythonDefs.h"
 #include "WidgetEventProxy.h"
 
 CDrawable_Text::CDrawable_Text(const std::string &text, int x, int y, int color)
@@ -14,22 +13,21 @@ void CDrawable_Text::Set_Text(const std::string &text) {
   WidgetEventProxy::Instance()->Emit();
 }
 
-void CDrawable_Text::Draw(QPainter &painter) {
-
-  painter.setPen(Qt::green);
+void CDrawable_Text::Draw(QPainter *painter) {
+  painter->setPen(Qt::green);
 
   // TODO: get real font
-  QFont font = painter.font();
+  QFont font = painter->font();
   font.setFamily("Courier New");
   font.setPixelSize(14);
-  painter.setFont(font);
+  painter->setFont(font);
 
   auto txt = QString::fromStdString(mText);
 
   QFontMetrics fm(font);
   int h = fm.height();
 
-  painter.drawText(QPoint{mPosX, mPosY + h}, txt);
+  painter->drawText(QPoint{mPosX, mPosY + h}, txt);
 }
 
 CDrawable_Line::CDrawable_Line(int x, int y, int x2, int y2, int color)
@@ -37,12 +35,11 @@ CDrawable_Line::CDrawable_Line(int x, int y, int x2, int y2, int color)
   WidgetEventProxy::Instance()->Emit();
 }
 
-void CDrawable_Line::Draw(QPainter &painter) {
+void CDrawable_Line::Draw(QPainter *painter) {
+  painter->setPen(QColor::fromRgb((mColor >> 16) & 0xFF, (mColor >> 8) & 0xFF,
+                                  (mColor) & 0xFF));
 
-  painter.setPen(QColor::fromRgb((mColor >> 16) & 0xFF, (mColor >> 8) & 0xFF,
-                                 (mColor) & 0xFF));
-
-  painter.drawLine(QPoint(mPosX, mPosY), QPoint(mPosX2, mPosY2));
+  painter->drawLine(QPoint(mPosX, mPosY), QPoint(mPosX2, mPosY2));
 }
 
 void CDrawable_Line::Set_Position(int x, int y, int x2, int y2) {
@@ -74,21 +71,20 @@ void CDrawable_Circle::Set_Radius(int radius) {
   WidgetEventProxy::Instance()->Emit();
 }
 
-void CDrawable_Circle::Draw(QPainter &painter) {
-
-  painter.setPen(QColor::fromRgb((mBorder_Color >> 16) & 0xFF,
-                                 (mBorder_Color >> 8) & 0xFF,
-                                 (mBorder_Color) & 0xFF));
+void CDrawable_Circle::Draw(QPainter *painter) {
+  painter->setPen(QColor::fromRgb((mBorder_Color >> 16) & 0xFF,
+                                  (mBorder_Color >> 8) & 0xFF,
+                                  (mBorder_Color) & 0xFF));
 
   if (mBrush_Color != 0xFFFFFFFF) {
-    painter.setBrush(QColor::fromRgb((mBrush_Color >> 16) & 0xFF,
-                                     (mBrush_Color >> 8) & 0xFF,
-                                     (mBrush_Color) & 0xFF));
+    painter->setBrush(QColor::fromRgb((mBrush_Color >> 16) & 0xFF,
+                                      (mBrush_Color >> 8) & 0xFF,
+                                      (mBrush_Color) & 0xFF));
   } else {
-    painter.setBrush(Qt::transparent);
+    painter->setBrush(Qt::transparent);
   }
 
-  painter.drawEllipse(QPoint(mPosX, mPosY), mRadius, mRadius);
+  painter->drawEllipse(QPoint(mPosX, mPosY), mRadius, mRadius);
 }
 
 CDrawable_Button::CDrawable_Button(const std::string &text, int x, int y,
@@ -101,7 +97,6 @@ CDrawable_Button::CDrawable_Button(const std::string &text, int x, int y,
 }
 
 void CDrawable_Button::Set_Position(int x, int y) {
-
   mPosX = x;
   mPosY = y;
 
@@ -109,7 +104,6 @@ void CDrawable_Button::Set_Position(int x, int y) {
 }
 
 void CDrawable_Button::Set_Size(int w, int h) {
-
   mWidth = w;
   mHeight = h;
 
@@ -117,7 +111,6 @@ void CDrawable_Button::Set_Size(int w, int h) {
 }
 
 void CDrawable_Button::Set_Text(const std::string &text) {
-
   mText = text;
 
   WidgetEventProxy::Instance()->Emit();
@@ -131,25 +124,24 @@ void CDrawable_Button::Register_Released_Callback(PyObject *cb) {
   mReleased_Callback.push_back(cb);
 }
 
-void CDrawable_Button::Draw(QPainter &painter) {
-
-  painter.setPen(QColor::fromRgb((mText_Color >> 16) & 0xFF,
-                                 (mText_Color >> 8) & 0xFF,
-                                 (mText_Color) & 0xFF));
+void CDrawable_Button::Draw(QPainter *painter) {
+  painter->setPen(QColor::fromRgb((mText_Color >> 16) & 0xFF,
+                                  (mText_Color >> 8) & 0xFF,
+                                  (mText_Color) & 0xFF));
 
   if (mBrush_Color != 0xFFFFFFFF) {
-    painter.setBrush(QColor::fromRgb((mBrush_Color >> 16) & 0xFF,
-                                     (mBrush_Color >> 8) & 0xFF,
-                                     (mBrush_Color) & 0xFF));
+    painter->setBrush(QColor::fromRgb((mBrush_Color >> 16) & 0xFF,
+                                      (mBrush_Color >> 8) & 0xFF,
+                                      (mBrush_Color) & 0xFF));
   } else {
-    painter.setBrush(Qt::transparent);
+    painter->setBrush(Qt::transparent);
   }
 
   // TODO: get real font
-  QFont font = painter.font();
+  QFont font = painter->font();
   font.setFamily("Courier New");
   font.setPixelSize(14);
-  painter.setFont(font);
+  painter->setFont(font);
 
   auto txt = QString::fromStdString(mText);
 
@@ -157,14 +149,13 @@ void CDrawable_Button::Draw(QPainter &painter) {
   int h = fm.height();
   int w = fm.horizontalAdvance(txt);
 
-  painter.drawRect(mPosX, mPosY, mWidth, mHeight);
-  painter.drawText(
+  painter->drawRect(mPosX, mPosY, mWidth, mHeight);
+  painter->drawText(
       QPoint(mPosX + mWidth / 2 - w / 2, mPosY + 2 * h / 7 + mHeight / 2), txt);
 }
 
 bool CDrawable_Button::Touched(int x, int y, bool touch) {
   if (x >= mPosX && x < mPosX + mWidth && y >= mPosY && y <= mPosY + mHeight) {
-
     if (touch) {
       for (auto cb : mPressed_Callback)
         py::call<void>(cb);
@@ -189,7 +180,6 @@ CDrawable_Checkbox::CDrawable_Checkbox(const std::string &text, int x, int y,
 }
 
 void CDrawable_Checkbox::Set_Position(int x, int y) {
-
   mPosX = x;
   mPosY = y;
 
@@ -197,7 +187,6 @@ void CDrawable_Checkbox::Set_Position(int x, int y) {
 }
 
 void CDrawable_Checkbox::Set_Size(int w, int h) {
-
   mWidth = w;
   mHeight = h;
 
@@ -205,7 +194,6 @@ void CDrawable_Checkbox::Set_Size(int w, int h) {
 }
 
 void CDrawable_Checkbox::Set_Text(const std::string &text) {
-
   mText = text;
 
   WidgetEventProxy::Instance()->Emit();
@@ -220,25 +208,23 @@ void CDrawable_Checkbox::Register_Unchecked_Callback(PyObject *cb) {
 }
 
 void CDrawable_Checkbox::Set_Checked(bool state) {
-
   mIs_Checked = state;
 
   WidgetEventProxy::Instance()->Emit();
 }
 
-void CDrawable_Checkbox::Draw(QPainter &painter) {
+void CDrawable_Checkbox::Draw(QPainter *painter) {
+  painter->setPen(QColor::fromRgb((mText_Color >> 16) & 0xFF,
+                                  (mText_Color >> 8) & 0xFF,
+                                  (mText_Color) & 0xFF));
 
-  painter.setPen(QColor::fromRgb((mText_Color >> 16) & 0xFF,
-                                 (mText_Color >> 8) & 0xFF,
-                                 (mText_Color) & 0xFF));
-
-  painter.setBrush(Qt::white);
+  painter->setBrush(Qt::white);
 
   // TODO: get real font
-  QFont font = painter.font();
+  QFont font = painter->font();
   font.setFamily("Courier New");
   font.setPixelSize(14);
-  painter.setFont(font);
+  painter->setFont(font);
 
   auto txt = QString::fromStdString(mText);
 
@@ -246,22 +232,21 @@ void CDrawable_Checkbox::Draw(QPainter &painter) {
   int h = fm.height();
   int w = fm.horizontalAdvance(txt);
 
-  painter.drawRect(mPosX, mPosY, 16, 16);
+  painter->drawRect(mPosX, mPosY, 16, 16);
   if (mIs_Checked) {
-    painter.setBrush(QColor::fromRgb((mCheck_Color >> 16) & 0xFF,
-                                     (mCheck_Color >> 8) & 0xFF,
-                                     (mCheck_Color) & 0xFF));
+    painter->setBrush(QColor::fromRgb((mCheck_Color >> 16) & 0xFF,
+                                      (mCheck_Color >> 8) & 0xFF,
+                                      (mCheck_Color) & 0xFF));
 
-    painter.drawRect(mPosX + 2, mPosY + 2, 16 - 4, 16 - 4);
+    painter->drawRect(mPosX + 2, mPosY + 2, 16 - 4, 16 - 4);
   }
 
-  painter.drawText(QPoint(mPosX + 16 + 4, mPosY + 2 * h / 7 + 16 / 2), txt);
+  painter->drawText(QPoint(mPosX + 16 + 4, mPosY + 2 * h / 7 + 16 / 2), txt);
 }
 
 bool CDrawable_Checkbox::Touched(int x, int y, bool touch) {
   if (x >= mPosX && x < mPosX + (mWidth > 0 ? mWidth : 16) && y >= mPosY &&
       y <= mPosY + (mHeight > 0 ? mHeight : 16)) {
-
     if (!touch) {
       mIs_Checked = !mIs_Checked;
     }
@@ -320,25 +305,23 @@ void CDrawable_Switch::Set_State(bool state) {
 
 bool CDrawable_Switch::Get_State() const { return mIs_Checked; }
 
-void CDrawable_Switch::Draw(QPainter &painter) {
+void CDrawable_Switch::Draw(QPainter *painter) {
+  painter->setPen(Qt::white);
 
-  painter.setPen(Qt::white);
-
-  painter.setBrush(QColor::fromRgb(
+  painter->setBrush(QColor::fromRgb(
       (mBg_Color >> 16) & 0xFF, (mBg_Color >> 8) & 0xFF, (mBg_Color) & 0xFF));
 
-  painter.drawRect(mPosX, mPosY, mWidth, mHeight);
+  painter->drawRect(mPosX, mPosY, mWidth, mHeight);
 
-  painter.setBrush(QColor::fromRgb((mColor >> 16) & 0xFF, (mColor >> 8) & 0xFF,
-                                   (mColor) & 0xFF));
+  painter->setBrush(QColor::fromRgb((mColor >> 16) & 0xFF, (mColor >> 8) & 0xFF,
+                                    (mColor) & 0xFF));
 
-  painter.drawRect(mPosX + 2 + (mIs_Checked ? ((mWidth - 2) / 2) : 0),
-                   mPosY + 2, (mWidth - 4) / 2, mHeight - 4);
+  painter->drawRect(mPosX + 2 + (mIs_Checked ? ((mWidth - 2) / 2) : 0),
+                    mPosY + 2, (mWidth - 4) / 2, mHeight - 4);
 }
 
 bool CDrawable_Switch::Touched(int x, int y, bool touch) {
   if (x >= mPosX && x < mPosX + mWidth && y >= mPosY && y <= mPosY + mHeight) {
-
     if (touch) {
       mIs_Checked = !mIs_Checked;
     }

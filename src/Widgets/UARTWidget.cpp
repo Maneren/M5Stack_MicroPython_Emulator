@@ -1,4 +1,5 @@
 #include "UARTWidget.h"
+#include "../M5Stack_MicroPython.h"
 
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollBar>

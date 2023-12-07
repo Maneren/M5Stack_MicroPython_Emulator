@@ -2,7 +2,6 @@
 
 #include "../BoostPythonDefs.h"
 #include "../M5Stack_MicroPython.h"
-#include "M5Screen.h"
 
 #include "M5Btn.h"
 #include "M5Checkbox.h"

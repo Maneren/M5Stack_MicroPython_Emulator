@@ -1,9 +1,6 @@
 #pragma once
 
-#include "../BoostPythonDefs.h"
 #include "../M5Stack_MicroPython.h"
-
-#include <iostream>
 
 /*
  * Base for all buttons of M5Stack Core2 device

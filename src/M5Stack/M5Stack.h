@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../BoostPythonDefs.h"
-#include "../M5Stack_MicroPython.h"
 #include "Buttons.h"
 #include "LCD.h"
 #include "M5Screen.h"

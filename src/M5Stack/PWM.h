@@ -1,9 +1,5 @@
 #pragma once
 
-#include "../BoostPythonDefs.h"
-
-#include <iostream>
-
 /*
  * PWM class wrapper
  */

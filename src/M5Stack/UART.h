@@ -4,7 +4,6 @@
 #include "../M5Stack_MicroPython.h"
 #include "Pin.h"
 
-#include <iostream>
 #include <string>
 
 /*

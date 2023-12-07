@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../M5Stack_MicroPython.h"
+#include "../M5Stack_Peripherals.h"
 
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>

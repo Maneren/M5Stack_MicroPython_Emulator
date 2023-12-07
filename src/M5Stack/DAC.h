@@ -1,9 +1,5 @@
 #pragma once
 
-#include "../BoostPythonDefs.h"
-
-#include <iostream>
-
 /*
  * DAC class encapsulating the Digital-To-Analog converter submodule
  */

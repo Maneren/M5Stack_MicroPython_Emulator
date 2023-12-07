@@ -3,8 +3,6 @@
 #include "../BoostPythonDefs.h"
 #include "../M5Stack_MicroPython.h"
 
-#include <iostream>
-
 /*
  * Pin class wrapper
  */

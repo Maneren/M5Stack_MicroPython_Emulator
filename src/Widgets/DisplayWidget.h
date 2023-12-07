@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../M5Stack_MicroPython.h"
 #include "../WidgetEventProxy.h"
 
 #include <QtGui/QPaintEvent>

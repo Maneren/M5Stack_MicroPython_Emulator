@@ -3,8 +3,6 @@
 #include "../BoostPythonDefs.h"
 #include "../M5Stack_MicroPython.h"
 
-#include <iostream>
-
 /*
  * Touch class wrapper to provide "touch" submodule
  */

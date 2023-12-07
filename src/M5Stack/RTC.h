@@ -3,7 +3,6 @@
 #include "../BoostPythonDefs.h"
 
 #include <ctime>
-#include <iostream>
 
 /*
  * RTC class wrapper for "rtc" submodule

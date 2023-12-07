@@ -4,8 +4,6 @@
 #include "../M5Stack_Drawables.h"
 #include "../M5Stack_MicroPython.h"
 
-#include <iostream>
-
 /*
  * M5Switch class wrapper
  */

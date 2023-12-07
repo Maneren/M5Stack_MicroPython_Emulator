@@ -1,9 +1,5 @@
 #pragma once
 
-#include "../BoostPythonDefs.h"
-
-#include <iostream>
-
 /*
  * ADC class encapsulating Analog-To-Digital converter submodule
  */

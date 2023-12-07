@@ -1,4 +1,5 @@
 #include "DisplayWidget.h"
+#include "../M5Stack_MicroPython.h"
 
 #include <QtGui/QMouseEvent>
 
@@ -22,7 +23,7 @@ void CDisplay_Widget::paintEvent(QPaintEvent *event) {
   painter.setRenderHint(QPainter::Antialiasing, false);
 
   auto display = CM5Stack_VM::Instance()->Get_Screen();
-  display->Render_To(painter);
+  display->Render_To(&painter);
 
   QWidget::paintEvent(event);
   painter.end();

@@ -6,10 +6,6 @@
 #include <boost/python.hpp>
 #pragma pop_macro("slots")
 
-// #include "SelfInitSingleton.h"
-
-// #include <concepts>
-
 namespace py = boost::python;
 
 // a concept for any object that defines its interface to Python

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <vector>
-
-#include "../M5Stack_MicroPython.h"
+#include "../WidgetEventProxy.h"
 
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QTextEdit>

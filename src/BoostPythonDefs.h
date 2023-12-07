@@ -1,10 +1,10 @@
 #pragma once
 
-// #define _snprintf snprintf
-// #define _copysign copysign
+// fix conflict between boost::python's and Qt's slots
+#pragma push_macro("slots")
+#undef slots
 #include <boost/python.hpp>
-// #undef _snprintf
-// #undef _copysign
+#pragma pop_macro("slots")
 
 // #include "SelfInitSingleton.h"
 

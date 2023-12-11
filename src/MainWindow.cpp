@@ -29,9 +29,6 @@ void CMain_Window::Setup_GUI() {
   {
     central->setLayout(centralLayout);
 
-    CAIO_Widget *aio = new CAIO_Widget(this);
-    centralLayout->addWidget(aio, 0, 1, 1, 1);
-
     // central layout
     QWidget *mainPanel = new QWidget(central);
     QVBoxLayout *mainPanelLayout = new QVBoxLayout();
@@ -66,6 +63,9 @@ void CMain_Window::Setup_GUI() {
     }
 
     centralLayout->addWidget(mainPanel, 0, 0, 2, 1);
+
+    CAIO_Widget *aio = new CAIO_Widget(this);
+    centralLayout->addWidget(aio, 0, 1, 1, 1);
   }
 
   setCentralWidget(central);

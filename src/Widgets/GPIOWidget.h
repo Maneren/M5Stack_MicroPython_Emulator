@@ -64,6 +64,8 @@ public:
   // updates pin state in controller and redraws the widget accordingly
   void Set_Pin_Output(int pinNo, int state);
 
+  void Show_AIO_Widget(int pinNo);
+
   // sets up the GUI
   void Setup_GUI();
   // triggers repainting of all child widgets

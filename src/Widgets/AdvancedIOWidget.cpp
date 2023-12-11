@@ -7,9 +7,7 @@
 #include <cstdio>
 
 CAIO_Pin_Widget::CAIO_Pin_Widget(uint32_t pinNo, CAIO_Widget *parent)
-    : QWidget(parent), mParent(parent), mPin_No(pinNo) {
-  //
-}
+    : QWidget(parent), mParent(parent), mPin_No(pinNo) {}
 
 void CAIO_Pin_Widget::Setup_GUI() {
   layout = new QGridLayout(this);

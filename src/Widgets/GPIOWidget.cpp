@@ -40,7 +40,7 @@ void CGPIO_Pin_Button_Widget::paintEvent(QPaintEvent *event) {
   painter.setRenderHint(QPainter::Antialiasing, true);
 
   QColor pinColor =
-      linearInterpolateColor(Qt::green, Qt::red, mPin_State / 255.0);
+      linearInterpolateColor(Qt::red, Qt::green, mPin_State / 255.0);
 
   // depending on pin mode, draw the circle accordingly
   switch (mPin_Mode) {
@@ -91,10 +91,12 @@ void CGPIO_Pin_Button_Widget::paintEvent(QPaintEvent *event) {
 
 void CGPIO_Pin_Button_Widget::mouseReleaseEvent(QMouseEvent *event) {
   // user clicked with left button - toggle in if it is in input mode
-  if (mPin_Mode == Pin::_IN && event->button() == Qt::LeftButton) {
-    if (mParent) {
+  if (mPin_Mode == Pin::_IN && mParent) {
+    if (event->button() == Qt::LeftButton) {
       mPin_State = mPin_State > 0 ? 0 : 1;
       mParent->Set_Pin_Output(mPin_No, mPin_State);
+    } else if (event->button() == Qt::RightButton) {
+      mParent->Show_AIO_Widget(mPin_No);
     }
   }
 }
@@ -102,7 +104,6 @@ void CGPIO_Pin_Button_Widget::mouseReleaseEvent(QMouseEvent *event) {
 void CGPIO_Pin_Button_Widget::Trigger_Repaint() { emit repaint(); }
 
 void CGPIO_Widget::Setup_GUI() {
-
   const auto cnt = CM5GPIO::GPIO_Count;
 
   auto ctl = CM5Stack_VM::Instance()->Get_GPIO();
@@ -112,7 +113,6 @@ void CGPIO_Widget::Setup_GUI() {
 
   // add pin widgets
   for (uint32_t i = 0; i < cnt; i++) {
-
     CGPIO_Pin_Button_Widget *btn = new CGPIO_Pin_Button_Widget(i, this);
     btn->Setup_GUI();
 
@@ -126,10 +126,8 @@ void CGPIO_Widget::Setup_GUI() {
   Trigger_Repaint(true);
 }
 
+// refresh state
 void CGPIO_Widget::Trigger_Repaint(bool force) {
-
-  // refresh state
-
   const auto cnt = CM5GPIO::GPIO_Count;
 
   auto ctl = CM5Stack_VM::Instance()->Get_GPIO();
@@ -154,7 +152,6 @@ void CGPIO_Widget::Trigger_Repaint(bool force) {
 }
 
 void CGPIO_Widget::Set_Pin_Output(int pinNo, int state) {
-
   // set pin output in controller
   auto ctl = CM5Stack_VM::Instance()->Get_GPIO();
 
@@ -165,5 +162,10 @@ void CGPIO_Widget::Set_Pin_Output(int pinNo, int state) {
     mGPIO_Btns[pinNo]->Set_State(ctl->Get_Pin_Mode(pinNo),
                                  ctl->Get_Pin_State(pinNo));
     mGPIO_Btns[pinNo]->Trigger_Repaint();
+  }
+}
+
+void CGPIO_Widget::Show_AIO_Widget(int pinNo) {
+  if (mGPIO_Btns[pinNo]) {
   }
 }
